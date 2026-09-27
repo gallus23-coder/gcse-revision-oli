@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4e78">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Revision">
+<title>GCSE Revision</title>
+<style>
+:root{
+  --bg:#f5f6f8; --card:#ffffff; --text:#1c2430; --muted:#6b7684; --line:#e3e6eb;
+  --accent:#1f4e78; --accent-2:#e8f0f8;
+  --red:#d64545; --red-bg:#fbe7e7; --amber:#d99a1e; --amber-bg:#fdf1d8; --green:#2e9b5f; --green-bg:#e2f4ea; --none:#cfd5dd;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#11151a; --card:#1b2129; --text:#e7ebf0; --muted:#98a3b0; --line:#2c343e;
+    --accent:#7fb0e0; --accent-2:#1f2c3a;
+    --red:#ef6b6b; --red-bg:#3a2224; --amber:#f0b64a; --amber-bg:#3a3020; --green:#4cc585; --green-bg:#1d3326; --none:#3a434e;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.4}
+button{font:inherit;color:inherit}
+header{position:sticky;top:0;z-index:5;background:var(--accent);color:#fff;padding:calc(env(safe-area-inset-top) + 10px) 16px 0}
+@media (prefers-color-scheme: dark){header{background:#16324d}}
+header h1{margin:0 0 8px;font-size:18px;font-weight:700}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:0 0 auto;border:0;border-radius:999px;padding:7px 14px;background:rgba(255,255,255,.15);color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+nav button.on{background:#fff;color:#1f4e78}
+main{max-width:720px;margin:0 auto;padding:16px 16px calc(env(safe-area-inset-bottom) + 40px)}
+h2{font-size:20px;margin:4px 0 12px}
+h3{font-size:15px;margin:0}
+.muted{color:var(--muted);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;flex:0 0 auto}
+.session{display:flex;align-items:flex-start;gap:12px}
+.session .body{flex:1;min-width:0}
+.session .top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.session .mins{font-weight:700;font-size:14px;color:var(--muted);white-space:nowrap}
+.check{width:28px;height:28px;border-radius:8px;border:2px solid var(--line);background:transparent;flex:0 0 auto;cursor:pointer;display:grid;place-items:center;margin-top:1px}
+.check.on{background:var(--green);border-color:var(--green);color:#fff}
+.session.done .subj{text-decoration:line-through;color:var(--muted)}
+.focus{margin:8px 0 0;padding:0;list-style:none}
+.focus li{font-size:14px;padding:3px 0;display:flex;gap:6px}
+.focus li::before{content:"→";color:var(--muted)}
+.link{border:0;background:none;color:var(--accent);font-weight:600;font-size:14px;padding:6px 0 0;cursor:pointer}
+.free{text-align:center;padding:28px 14px}
+.free .big{font-size:36px}
+.day{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.day.today h3::after{content:"Today";margin-left:8px;font-size:11px;font-weight:700;background:var(--accent-2);color:var(--accent);padding:2px 8px;border-radius:999px;vertical-align:middle}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;font-size:13px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.chip .dot{width:8px;height:8px;margin-right:6px}
+.bar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--none);margin:10px 0 8px}
+.bar span{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}
+.legend b{color:var(--text)}
+.filters{display:flex;gap:6px;overflow-x:auto;margin:0 0 12px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.filters button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme: dark){.filters button.on{color:#11151a}}
+details.group{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+details.group>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:700}
+details.group>summary::-webkit-details-marker{display:none}
+details.group>summary>span:first-child{flex:1}
+details.group>summary .count{font-weight:600;font-size:13px;color:var(--muted);white-space:nowrap}
+details.group>summary::after{content:"›";font-size:20px;color:var(--muted);transition:transform .15s}
+details.group[open]>summary::after{transform:rotate(90deg)}
+.sub{padding:8px 14px 2px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);border-top:1px solid var(--line)}
+.item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--line)}
+.sub+.item{border-top:0}
+.item .t{flex:1;min-width:0;font-size:15px}
+.rag{display:flex;gap:5px;flex:0 0 auto}
+.rag button{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--line);background:transparent;font-size:13px;font-weight:800;cursor:pointer;color:var(--muted)}
+.rag button.r.on{background:var(--red);border-color:var(--red);color:#fff}
+.rag button.a.on{background:var(--amber);border-color:var(--amber);color:#fff}
+.rag button.g.on{background:var(--green);border-color:var(--green);color:#fff}
+.item.r{background:var(--red-bg)} .item.a{background:var(--amber-bg)} .item.g{background:var(--green-bg)}
+.empty{padding:20px;text-align:center;color:var(--muted)}
+.btn{display:block;width:100%;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px;font-weight:700;margin-top:8px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme: dark){.btn.primary{color:#11151a}}
+.btn.danger{color:var(--red)}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 20px);transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
+.toast.show{opacity:.95}
+</style>
+</head>
+<body>
+<header>
+  <h1>GCSE Revision</h1>
+  <nav id="tabs"></nav>
+</header>
+<main id="view"></main>
+<div class="toast" id="toast"></div>
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+
+<script>
+const DATA = {"days": [["Mon", [["Maths", 30], ["Biology", 50], ["French", 20]]], ["Tue", [["English", 30], ["Maths", 30], ["Chemistry", 50], ["French", 20]]], ["Wed", [["Maths", 30], ["Physics", 50], ["French", 20], ["Sports Studies", 30]]], ["Thu", [["English", 30], ["Biology", 50], ["Geography", 40]]], ["Fri", []], ["Sat", [["Maths", 30], ["Chemistry", 50], ["English", 30], ["French", 20], ["Sports Studies", 30]]], ["Sun", [["Maths", 30], ["Physics", 50], ["English", 30], ["Geography", 40]]]], "subjects": {"Maths": {"title": "AQA GCSE Maths (8300) – Higher tier topic tracker", "items": [["Number", "", "Place value, negatives, order of operations"], ["Number", "", "Factors, multiples, primes, HCF & LCM"], ["Number", "", "Fractions, decimals & percentages"], ["Number", "", "Indices: negative & fractional powers"], ["Number", "", "Standard form"], ["Number", "", "Rounding, estimation & error intervals"], ["Number", "", "Upper and lower bounds"], ["Number", "", "Surds (simplify, expand, rationalise)"], ["Number", "", "Recurring decimals to fractions"], ["Number", "", "Product rule for counting"], ["Algebra", "", "Expanding (incl. triple brackets) & factorising"], ["Algebra", "", "Algebraic fractions"], ["Algebra", "", "Rearranging & changing the subject"], ["Algebra", "", "Linear equations & inequalities"], ["Algebra", "", "Quadratic inequalities"], ["Algebra", "", "Solving quadratics (factorise, formula)"], ["Algebra", "", "Completing the square & turning points"], ["Algebra", "", "Simultaneous equations (linear & quadratic)"], ["Algebra", "", "Sequences & nth term (incl. quadratic)"], ["Algebra", "", "y = mx + c, parallel & perpendicular lines"], ["Algebra", "", "Quadratic, cubic, reciprocal & exponential graphs"], ["Algebra", "", "Graph transformations"], ["Algebra", "", "Equation of a circle & tangent"], ["Algebra", "", "Functions: composite & inverse"], ["Algebra", "", "Iteration"], ["Algebra", "", "Algebraic proof"], ["Algebra", "", "Gradients of curves & area under graphs"], ["Ratio & Proportion", "", "Ratio: simplify, share, combine"], ["Ratio & Proportion", "", "Direct & inverse proportion (incl. algebraic)"], ["Ratio & Proportion", "", "Percentage change & reverse percentages"], ["Ratio & Proportion", "", "Compound interest, growth & decay"], ["Ratio & Proportion", "", "Speed, density & pressure"], ["Ratio & Proportion", "", "Unit & compound measure conversions"], ["Ratio & Proportion", "", "Rates of change from graphs"], ["Geometry & Measures", "", "Angle rules & polygons"], ["Geometry & Measures", "", "Area, perimeter, arcs & sectors"], ["Geometry & Measures", "", "Volume & surface area (prisms, cones, spheres)"], ["Geometry & Measures", "", "Pythagoras (2D & 3D)"], ["Geometry & Measures", "", "Trigonometry (SOHCAHTOA, exact values)"], ["Geometry & Measures", "", "Sine rule, cosine rule & ½ab sin C"], ["Geometry & Measures", "", "3D trigonometry"], ["Geometry & Measures", "", "Transformations incl. negative/fractional enlargement"], ["Geometry & Measures", "", "Similarity & congruence (incl. area/volume scale factors)"], ["Geometry & Measures", "", "Constructions, loci & bearings"], ["Geometry & Measures", "", "Circle theorems"], ["Geometry & Measures", "", "Vectors & vector proof"], ["Probability", "", "Basic probability & sample spaces"], ["Probability", "", "Relative frequency & expected outcomes"], ["Probability", "", "Tree diagrams"], ["Probability", "", "Venn diagrams & set notation"], ["Probability", "", "Conditional probability"], ["Statistics", "", "Averages & range (incl. grouped data)"], ["Statistics", "", "Sampling & capture-recapture"], ["Statistics", "", "Scatter graphs & correlation"], ["Statistics", "", "Cumulative frequency & box plots"], ["Statistics", "", "Histograms (frequency density)"]]}, "English": {"title": "AQA GCSE English Language (8700) & Literature (8702) tracker", "items": [["Lang Paper 1", "Reading – fiction", "Q1: list 4 things from the extract"], ["Lang Paper 1", "Reading – fiction", "Q2: language analysis (words, techniques, effects)"], ["Lang Paper 1", "Reading – fiction", "Q3: structure (openings, shifts, focus, endings)"], ["Lang Paper 1", "Reading – fiction", "Q4: evaluate a statement about the text"], ["Lang Paper 1", "Writing – creative", "Q5: descriptive writing (e.g. from a picture)"], ["Lang Paper 1", "Writing – creative", "Q5: narrative / story writing"], ["Lang Paper 2", "Reading – non-fiction", "Q1: true/false statements"], ["Lang Paper 2", "Reading – non-fiction", "Q2: summarise differences across two sources"], ["Lang Paper 2", "Reading – non-fiction", "Q3: language analysis (19th-century or modern source)"], ["Lang Paper 2", "Reading – non-fiction", "Q4: compare writers' viewpoints and methods"], ["Lang Paper 2", "Writing – viewpoint", "Q5: letter, article, speech, essay or leaflet"], ["Lang Paper 2", "Writing – viewpoint", "Persuasive techniques & counter-arguments"], ["Lang – skills", "Technical accuracy", "Spelling, punctuation & grammar (worth 16 of each Q5's 40)"], ["Lang – skills", "Technical accuracy", "Sentence variety & ambitious vocabulary"], ["Lang – skills", "Exam technique", "Timing: 1 hr 45 per paper (reading 1 hr, writing 45 min)"], ["Lang – skills", "Exam technique", "Planning a Q5 answer in 5 minutes"], ["Lit Paper 1", "Shakespeare: [your play]", "Plot / structure"], ["Lit Paper 1", "Shakespeare: [your play]", "Key characters"], ["Lit Paper 1", "Shakespeare: [your play]", "Themes"], ["Lit Paper 1", "Shakespeare: [your play]", "Context (writer, era, audience)"], ["Lit Paper 1", "Shakespeare: [your play]", "Key quotations learned"], ["Lit Paper 1", "Shakespeare: [your play]", "Writer's methods (language, form, structure)"], ["Lit Paper 1", "Shakespeare: [your play]", "Timed essay practice"], ["Lit Paper 1", "19th-century novel: [your novel]", "Plot / structure"], ["Lit Paper 1", "19th-century novel: [your novel]", "Key characters"], ["Lit Paper 1", "19th-century novel: [your novel]", "Themes"], ["Lit Paper 1", "19th-century novel: [your novel]", "Context (writer, era, audience)"], ["Lit Paper 1", "19th-century novel: [your novel]", "Key quotations learned"], ["Lit Paper 1", "19th-century novel: [your novel]", "Writer's methods (language, form, structure)"], ["Lit Paper 1", "19th-century novel: [your novel]", "Timed essay practice"], ["Lit Paper 2", "Modern text: [your play/novel]", "Plot / structure"], ["Lit Paper 2", "Modern text: [your play/novel]", "Key characters"], ["Lit Paper 2", "Modern text: [your play/novel]", "Themes"], ["Lit Paper 2", "Modern text: [your play/novel]", "Context (writer, era, audience)"], ["Lit Paper 2", "Modern text: [your play/novel]", "Key quotations learned"], ["Lit Paper 2", "Modern text: [your play/novel]", "Writer's methods (language, form, structure)"], ["Lit Paper 2", "Modern text: [your play/novel]", "Timed essay practice"], ["Lit Paper 2", "Poetry anthology: [your cluster]", "Know all 15 poems: content & message"], ["Lit Paper 2", "Poetry anthology: [your cluster]", "Key quotations for each poem"], ["Lit Paper 2", "Poetry anthology: [your cluster]", "Poets' methods: form, structure, language"], ["Lit Paper 2", "Poetry anthology: [your cluster]", "Context for each poem"], ["Lit Paper 2", "Poetry anthology: [your cluster]", "Pairing poems for comparison"], ["Lit Paper 2", "Poetry anthology: [your cluster]", "Timed comparison essay"], ["Lit Paper 2", "Unseen poetry", "Analyse one unseen poem"], ["Lit Paper 2", "Unseen poetry", "Compare two unseen poems (methods only)"], ["Lit – skills", "Essay technique", "Answering the question's key words throughout"], ["Lit – skills", "Essay technique", "Embedding and analysing quotations"], ["Lit – skills", "Essay technique", "Weaving in context (not bolting it on)"], ["Lit – skills", "Exam technique", "Timing: Paper 1 = 1 hr 45, Paper 2 = 2 hr 15"]]}, "Biology": {"title": "AQA GCSE Biology (8461) · Paper 1 & 2 each 1 hr 45, 100 marks · (HT) = Higher tier only", "items": [["Paper 1", "1. Cell biology", "Eukaryotic & prokaryotic cells"], ["Paper 1", "1. Cell biology", "Animal & plant cell structures"], ["Paper 1", "1. Cell biology", "Cell specialisation & differentiation"], ["Paper 1", "1. Cell biology", "Microscopy & magnification calculations"], ["Paper 1", "1. Cell biology", "Culturing microorganisms & aseptic technique"], ["Paper 1", "1. Cell biology", "Chromosomes, mitosis & the cell cycle"], ["Paper 1", "1. Cell biology", "Stem cells"], ["Paper 1", "1. Cell biology", "Diffusion"], ["Paper 1", "1. Cell biology", "Osmosis"], ["Paper 1", "1. Cell biology", "Active transport"], ["Paper 1", "1. Cell biology", "Surface area to volume ratio & exchange"], ["Paper 1", "2. Organisation", "Levels of organisation"], ["Paper 1", "2. Organisation", "Digestive system"], ["Paper 1", "2. Organisation", "Enzymes: lock & key, temperature & pH"], ["Paper 1", "2. Organisation", "Heart & blood vessels"], ["Paper 1", "2. Organisation", "Blood components"], ["Paper 1", "2. Organisation", "Coronary heart disease & treatments"], ["Paper 1", "2. Organisation", "Health, risk factors & non-communicable disease"], ["Paper 1", "2. Organisation", "Cancer"], ["Paper 1", "2. Organisation", "Plant tissues & organs"], ["Paper 1", "2. Organisation", "Transpiration & translocation"], ["Paper 1", "3. Infection & response", "Viral, bacterial, fungal & protist diseases"], ["Paper 1", "3. Infection & response", "Human defence systems"], ["Paper 1", "3. Infection & response", "Vaccination"], ["Paper 1", "3. Infection & response", "Antibiotics & painkillers"], ["Paper 1", "3. Infection & response", "Drug discovery & development"], ["Paper 1", "3. Infection & response", "Monoclonal antibodies (HT)"], ["Paper 1", "3. Infection & response", "Plant diseases & defences"], ["Paper 1", "4. Bioenergetics", "Photosynthesis equation"], ["Paper 1", "4. Bioenergetics", "Rate of photosynthesis & limiting factors (inverse square law HT)"], ["Paper 1", "4. Bioenergetics", "Uses of glucose"], ["Paper 1", "4. Bioenergetics", "Aerobic & anaerobic respiration"], ["Paper 1", "4. Bioenergetics", "Response to exercise & oxygen debt"], ["Paper 1", "4. Bioenergetics", "Metabolism"], ["Paper 2", "5. Homeostasis & response", "Principles of homeostasis"], ["Paper 2", "5. Homeostasis & response", "Nervous system & reflex arc"], ["Paper 2", "5. Homeostasis & response", "The brain"], ["Paper 2", "5. Homeostasis & response", "The eye & vision defects"], ["Paper 2", "5. Homeostasis & response", "Control of body temperature"], ["Paper 2", "5. Homeostasis & response", "Endocrine system"], ["Paper 2", "5. Homeostasis & response", "Blood glucose control & diabetes"], ["Paper 2", "5. Homeostasis & response", "Kidneys & water balance"], ["Paper 2", "5. Homeostasis & response", "Hormones in human reproduction"], ["Paper 2", "5. Homeostasis & response", "Contraception"], ["Paper 2", "5. Homeostasis & response", "Hormones to treat infertility (HT)"], ["Paper 2", "5. Homeostasis & response", "Negative feedback: adrenaline & thyroxine (HT)"], ["Paper 2", "5. Homeostasis & response", "Plant hormones: auxins, gibberellins & ethene"], ["Paper 2", "6. Inheritance, variation & evolution", "Sexual & asexual reproduction"], ["Paper 2", "6. Inheritance, variation & evolution", "Meiosis"], ["Paper 2", "6. Inheritance, variation & evolution", "DNA structure & the genome"], ["Paper 2", "6. Inheritance, variation & evolution", "Protein synthesis (HT)"], ["Paper 2", "6. Inheritance, variation & evolution", "Genetic inheritance & Punnett squares"], ["Paper 2", "6. Inheritance, variation & evolution", "Inherited disorders"], ["Paper 2", "6. Inheritance, variation & evolution", "Sex determination"], ["Paper 2", "6. Inheritance, variation & evolution", "Variation"], ["Paper 2", "6. Inheritance, variation & evolution", "Evolution & natural selection"], ["Paper 2", "6. Inheritance, variation & evolution", "Darwin, Wallace & speciation"], ["Paper 2", "6. Inheritance, variation & evolution", "History of genetics (Mendel)"], ["Paper 2", "6. Inheritance, variation & evolution", "Selective breeding"], ["Paper 2", "6. Inheritance, variation & evolution", "Genetic engineering"], ["Paper 2", "6. Inheritance, variation & evolution", "Cloning"], ["Paper 2", "6. Inheritance, variation & evolution", "Evidence for evolution: fossils & antibiotic resistance"], ["Paper 2", "6. Inheritance, variation & evolution", "Extinction"], ["Paper 2", "6. Inheritance, variation & evolution", "Classification"], ["Paper 2", "7. Ecology", "Communities & interdependence"], ["Paper 2", "7. Ecology", "Abiotic & biotic factors"], ["Paper 2", "7. Ecology", "Adaptations"], ["Paper 2", "7. Ecology", "Food chains & predator-prey cycles"], ["Paper 2", "7. Ecology", "Sampling: quadrats & transects"], ["Paper 2", "7. Ecology", "Carbon & water cycles"], ["Paper 2", "7. Ecology", "Decomposition"], ["Paper 2", "7. Ecology", "Impact of environmental change (HT)"], ["Paper 2", "7. Ecology", "Biodiversity & human impact"], ["Paper 2", "7. Ecology", "Global warming"], ["Paper 2", "7. Ecology", "Maintaining biodiversity"], ["Paper 2", "7. Ecology", "Trophic levels & pyramids of biomass"], ["Paper 2", "7. Ecology", "Food security, farming & biotechnology"], ["Both papers", "Required practicals", "Microscopy"], ["Both papers", "Required practicals", "Microbiology: effect of antiseptics/antibiotics"], ["Both papers", "Required practicals", "Osmosis in plant tissue"], ["Both papers", "Required practicals", "Food tests"], ["Both papers", "Required practicals", "Effect of pH on amylase"], ["Both papers", "Required practicals", "Light intensity & photosynthesis"], ["Both papers", "Required practicals", "Reaction time"], ["Both papers", "Required practicals", "Plant responses to light or gravity"], ["Both papers", "Required practicals", "Field investigation (quadrats)"], ["Both papers", "Required practicals", "Temperature & rate of decay"], ["Both papers", "Skills", "Maths: magnification, percentages, rates, graphs"], ["Both papers", "Skills", "6-mark extended answers"], ["Both papers", "Skills", "Interpreting data & graphs"]]}, "Chemistry": {"title": "AQA GCSE Chemistry (8462) · Paper 1 & 2 each 1 hr 45, 100 marks · (HT) = Higher tier only", "items": [["Paper 1", "1. Atomic structure & periodic table", "Atoms, elements, compounds & mixtures"], ["Paper 1", "1. Atomic structure & periodic table", "Separation techniques"], ["Paper 1", "1. Atomic structure & periodic table", "Development of the atomic model"], ["Paper 1", "1. Atomic structure & periodic table", "Subatomic particles, isotopes & relative atomic mass"], ["Paper 1", "1. Atomic structure & periodic table", "Electron configuration"], ["Paper 1", "1. Atomic structure & periodic table", "Development of the periodic table"], ["Paper 1", "1. Atomic structure & periodic table", "Metals & non-metals"], ["Paper 1", "1. Atomic structure & periodic table", "Group 0"], ["Paper 1", "1. Atomic structure & periodic table", "Group 1"], ["Paper 1", "1. Atomic structure & periodic table", "Group 7"], ["Paper 1", "1. Atomic structure & periodic table", "Transition metals"], ["Paper 1", "2. Bonding, structure & properties", "Ionic bonding & ionic compounds"], ["Paper 1", "2. Bonding, structure & properties", "Covalent bonding"], ["Paper 1", "2. Bonding, structure & properties", "Metallic bonding"], ["Paper 1", "2. Bonding, structure & properties", "States of matter & state symbols"], ["Paper 1", "2. Bonding, structure & properties", "Properties of simple molecules vs giant structures"], ["Paper 1", "2. Bonding, structure & properties", "Diamond, graphite, graphene & fullerenes"], ["Paper 1", "2. Bonding, structure & properties", "Polymers & alloys"], ["Paper 1", "2. Bonding, structure & properties", "Nanoparticles & their uses"], ["Paper 1", "3. Quantitative chemistry", "Conservation of mass & balancing equations"], ["Paper 1", "3. Quantitative chemistry", "Relative formula mass"], ["Paper 1", "3. Quantitative chemistry", "Moles & Avogadro's constant (HT)"], ["Paper 1", "3. Quantitative chemistry", "Reacting masses & limiting reactants (HT)"], ["Paper 1", "3. Quantitative chemistry", "Concentration of solutions"], ["Paper 1", "3. Quantitative chemistry", "Percentage yield"], ["Paper 1", "3. Quantitative chemistry", "Atom economy"], ["Paper 1", "3. Quantitative chemistry", "Concentrations in mol/dm³ & titration calculations (HT)"], ["Paper 1", "3. Quantitative chemistry", "Volumes of gases (HT)"], ["Paper 1", "4. Chemical changes", "Reactivity series"], ["Paper 1", "4. Chemical changes", "Oxidation & reduction (electron transfer HT)"], ["Paper 1", "4. Chemical changes", "Extraction of metals"], ["Paper 1", "4. Chemical changes", "Acids with metals"], ["Paper 1", "4. Chemical changes", "Neutralisation & making salts"], ["Paper 1", "4. Chemical changes", "Titrations"], ["Paper 1", "4. Chemical changes", "pH, strong & weak acids (HT)"], ["Paper 1", "4. Chemical changes", "Electrolysis: molten & aqueous"], ["Paper 1", "4. Chemical changes", "Electrolysis of aluminium oxide"], ["Paper 1", "4. Chemical changes", "Half equations (HT)"], ["Paper 1", "5. Energy changes", "Exothermic & endothermic reactions"], ["Paper 1", "5. Energy changes", "Reaction profiles"], ["Paper 1", "5. Energy changes", "Bond energy calculations (HT)"], ["Paper 1", "5. Energy changes", "Chemical cells & batteries"], ["Paper 1", "5. Energy changes", "Fuel cells"], ["Paper 2", "6. Rate & extent of change", "Calculating rates (incl. tangents HT)"], ["Paper 2", "6. Rate & extent of change", "Factors affecting rate"], ["Paper 2", "6. Rate & extent of change", "Collision theory & activation energy"], ["Paper 2", "6. Rate & extent of change", "Catalysts"], ["Paper 2", "6. Rate & extent of change", "Reversible reactions & equilibrium"], ["Paper 2", "6. Rate & extent of change", "Le Chatelier's principle (HT)"], ["Paper 2", "7. Organic chemistry", "Crude oil, hydrocarbons & alkanes"], ["Paper 2", "7. Organic chemistry", "Fractional distillation"], ["Paper 2", "7. Organic chemistry", "Combustion"], ["Paper 2", "7. Organic chemistry", "Cracking & alkenes"], ["Paper 2", "7. Organic chemistry", "Reactions of alkenes"], ["Paper 2", "7. Organic chemistry", "Alcohols"], ["Paper 2", "7. Organic chemistry", "Carboxylic acids"], ["Paper 2", "7. Organic chemistry", "Esters"], ["Paper 2", "7. Organic chemistry", "Addition polymerisation"], ["Paper 2", "7. Organic chemistry", "Condensation polymerisation (HT)"], ["Paper 2", "7. Organic chemistry", "Amino acids & proteins (HT)"], ["Paper 2", "7. Organic chemistry", "DNA & natural polymers"], ["Paper 2", "8. Chemical analysis", "Pure substances & formulations"], ["Paper 2", "8. Chemical analysis", "Chromatography & Rf values"], ["Paper 2", "8. Chemical analysis", "Tests for gases"], ["Paper 2", "8. Chemical analysis", "Flame tests"], ["Paper 2", "8. Chemical analysis", "Metal hydroxide precipitates"], ["Paper 2", "8. Chemical analysis", "Tests for carbonates, halides & sulfates"], ["Paper 2", "8. Chemical analysis", "Instrumental methods & flame emission spectroscopy"], ["Paper 2", "9. Chemistry of the atmosphere", "Evolution of the atmosphere"], ["Paper 2", "9. Chemistry of the atmosphere", "Greenhouse gases & climate change"], ["Paper 2", "9. Chemistry of the atmosphere", "Carbon footprint"], ["Paper 2", "9. Chemistry of the atmosphere", "Atmospheric pollutants"], ["Paper 2", "10. Using resources", "Sustainability & finite resources"], ["Paper 2", "10. Using resources", "Potable water"], ["Paper 2", "10. Using resources", "Waste water treatment"], ["Paper 2", "10. Using resources", "Phytomining & bioleaching (HT)"], ["Paper 2", "10. Using resources", "Life cycle assessments"], ["Paper 2", "10. Using resources", "Reduce, reuse, recycle"], ["Paper 2", "10. Using resources", "Corrosion & its prevention"], ["Paper 2", "10. Using resources", "Alloys"], ["Paper 2", "10. Using resources", "Ceramics, polymers & composites"], ["Paper 2", "10. Using resources", "The Haber process"], ["Paper 2", "10. Using resources", "NPK fertilisers"], ["Both papers", "Required practicals", "Making salts"], ["Both papers", "Required practicals", "Neutralisation & titration"], ["Both papers", "Required practicals", "Electrolysis"], ["Both papers", "Required practicals", "Temperature changes"], ["Both papers", "Required practicals", "Rates of reaction"], ["Both papers", "Required practicals", "Chromatography"], ["Both papers", "Required practicals", "Identifying ions"], ["Both papers", "Required practicals", "Water purification"], ["Both papers", "Skills", "Maths: moles, concentrations, yield, rearranging"], ["Both papers", "Skills", "Writing balanced & ionic equations"], ["Both papers", "Skills", "6-mark extended answers"]]}, "Physics": {"title": "AQA GCSE Physics (8463) · Paper 1 & 2 each 1 hr 45, 100 marks · (HT) = Higher tier only", "items": [["Paper 1", "1. Energy", "Energy stores & systems"], ["Paper 1", "1. Energy", "Kinetic, gravitational & elastic energy calculations"], ["Paper 1", "1. Energy", "Specific heat capacity"], ["Paper 1", "1. Energy", "Power"], ["Paper 1", "1. Energy", "Conservation & dissipation of energy"], ["Paper 1", "1. Energy", "Thermal insulation"], ["Paper 1", "1. Energy", "Efficiency"], ["Paper 1", "1. Energy", "Energy resources: renewable & non-renewable"], ["Paper 1", "2. Electricity", "Circuit symbols"], ["Paper 1", "2. Electricity", "Charge & current"], ["Paper 1", "2. Electricity", "Resistance & V = IR"], ["Paper 1", "2. Electricity", "I-V characteristics (resistor, lamp, diode, thermistor, LDR)"], ["Paper 1", "2. Electricity", "Series & parallel circuits"], ["Paper 1", "2. Electricity", "Mains electricity, AC & DC"], ["Paper 1", "2. Electricity", "Electrical power & energy transfers"], ["Paper 1", "2. Electricity", "The National Grid"], ["Paper 1", "2. Electricity", "Static electricity"], ["Paper 1", "2. Electricity", "Electric fields"], ["Paper 1", "3. Particle model of matter", "Density"], ["Paper 1", "3. Particle model of matter", "Changes of state"], ["Paper 1", "3. Particle model of matter", "Internal energy"], ["Paper 1", "3. Particle model of matter", "Specific latent heat"], ["Paper 1", "3. Particle model of matter", "Particle motion & gas pressure"], ["Paper 1", "3. Particle model of matter", "Increasing gas pressure by doing work (HT)"], ["Paper 1", "4. Atomic structure", "Development of the atomic model"], ["Paper 1", "4. Atomic structure", "Isotopes"], ["Paper 1", "4. Atomic structure", "Alpha, beta, gamma & neutron radiation"], ["Paper 1", "4. Atomic structure", "Nuclear equations"], ["Paper 1", "4. Atomic structure", "Half-life"], ["Paper 1", "4. Atomic structure", "Contamination & irradiation"], ["Paper 1", "4. Atomic structure", "Background radiation"], ["Paper 1", "4. Atomic structure", "Uses of nuclear radiation"], ["Paper 1", "4. Atomic structure", "Nuclear fission & fusion"], ["Paper 2", "5. Forces", "Scalars & vectors"], ["Paper 2", "5. Forces", "Contact & non-contact forces"], ["Paper 2", "5. Forces", "Weight, mass & gravity"], ["Paper 2", "5. Forces", "Resultant forces & vector diagrams (HT)"], ["Paper 2", "5. Forces", "Work done"], ["Paper 2", "5. Forces", "Hooke's law & elasticity"], ["Paper 2", "5. Forces", "Moments, levers & gears"], ["Paper 2", "5. Forces", "Pressure in fluids & upthrust"], ["Paper 2", "5. Forces", "Speed, velocity & distance-time graphs"], ["Paper 2", "5. Forces", "Acceleration & velocity-time graphs"], ["Paper 2", "5. Forces", "Newton's laws"], ["Paper 2", "5. Forces", "Stopping distances"], ["Paper 2", "5. Forces", "Momentum (HT)"], ["Paper 2", "5. Forces", "Changes in momentum & safety (HT)"], ["Paper 2", "6. Waves", "Transverse & longitudinal waves"], ["Paper 2", "6. Waves", "Wave properties & the wave equation"], ["Paper 2", "6. Waves", "Reflection & refraction"], ["Paper 2", "6. Waves", "Sound waves & hearing"], ["Paper 2", "6. Waves", "Ultrasound & seismic waves (HT)"], ["Paper 2", "6. Waves", "Electromagnetic spectrum"], ["Paper 2", "6. Waves", "Uses & dangers of EM waves"], ["Paper 2", "6. Waves", "Lenses & ray diagrams"], ["Paper 2", "6. Waves", "Visible light & colour"], ["Paper 2", "6. Waves", "Black body radiation"], ["Paper 2", "7. Magnetism & electromagnetism", "Magnetic poles & fields"], ["Paper 2", "7. Magnetism & electromagnetism", "Electromagnets & solenoids"], ["Paper 2", "7. Magnetism & electromagnetism", "Motor effect & F = BIL (HT)"], ["Paper 2", "7. Magnetism & electromagnetism", "Electric motors (HT)"], ["Paper 2", "7. Magnetism & electromagnetism", "Loudspeakers (HT)"], ["Paper 2", "7. Magnetism & electromagnetism", "Generator effect (HT)"], ["Paper 2", "7. Magnetism & electromagnetism", "Microphones (HT)"], ["Paper 2", "7. Magnetism & electromagnetism", "Transformers (HT)"], ["Paper 2", "8. Space physics", "Our solar system"], ["Paper 2", "8. Space physics", "Life cycle of a star"], ["Paper 2", "8. Space physics", "Orbital motion & satellites (HT)"], ["Paper 2", "8. Space physics", "Red-shift & the Big Bang"], ["Both papers", "Required practicals", "Specific heat capacity"], ["Both papers", "Required practicals", "Thermal insulation"], ["Both papers", "Required practicals", "Resistance"], ["Both papers", "Required practicals", "I-V characteristics"], ["Both papers", "Required practicals", "Density"], ["Both papers", "Required practicals", "Force & extension"], ["Both papers", "Required practicals", "Acceleration"], ["Both papers", "Required practicals", "Waves (ripple tank & string)"], ["Both papers", "Required practicals", "Light: reflection & refraction"], ["Both papers", "Required practicals", "Infrared radiation & surfaces"], ["Both papers", "Skills", "Equations to recall (learn by heart)"], ["Both papers", "Skills", "Equations from the equation sheet"], ["Both papers", "Skills", "Units & unit conversions"], ["Both papers", "Skills", "Rearranging equations"], ["Both papers", "Skills", "6-mark extended answers"]]}, "French": {"title": "AQA GCSE French (8658)", "items": [["Theme 1: People & lifestyle", "Identity & relationships with others", "Describing yourself, family & friends"], ["Theme 1: People & lifestyle", "Identity & relationships with others", "Relationships, getting on & falling out"], ["Theme 1: People & lifestyle", "Healthy living & lifestyle", "Food, drink, exercise & sleep"], ["Theme 1: People & lifestyle", "Healthy living & lifestyle", "Health problems & healthy choices"], ["Theme 1: People & lifestyle", "Education & work", "School subjects, rules & opinions"], ["Theme 1: People & lifestyle", "Education & work", "Future study, jobs & ambitions"], ["Theme 2: Popular culture", "Free-time activities", "Sport, music, TV, film & reading"], ["Theme 2: Popular culture", "Free-time activities", "Going out & making plans"], ["Theme 2: Popular culture", "Customs, festivals & celebrations", "Festivals in French-speaking countries"], ["Theme 2: Popular culture", "Customs, festivals & celebrations", "Family celebrations & traditions"], ["Theme 2: Popular culture", "Celebrity culture", "Celebrities, role models & influencers"], ["Theme 3: Communication & the world around us", "Travel & tourism, incl. places of interest", "Holidays past, present & future"], ["Theme 3: Communication & the world around us", "Travel & tourism, incl. places of interest", "Transport, accommodation & problems"], ["Theme 3: Communication & the world around us", "Media & technology", "Phones, internet & social media"], ["Theme 3: Communication & the world around us", "Media & technology", "Pros and cons of technology"], ["Theme 3: Communication & the world around us", "The environment & where people live", "Home, town & region"], ["Theme 3: Communication & the world around us", "The environment & where people live", "Environmental problems & solutions"], ["Grammar", "Verbs & tenses", "Present tense (regular -er/-ir/-re, irregular, reflexive)"], ["Grammar", "Verbs & tenses", "Perfect tense with avoir"], ["Grammar", "Verbs & tenses", "Perfect tense with être (& agreement)"], ["Grammar", "Verbs & tenses", "Imperfect (and when to use it vs perfect)"], ["Grammar", "Verbs & tenses", "Near future (aller + infinitive) & future tense"], ["Grammar", "Verbs & tenses", "Conditional"], ["Grammar", "Verbs & tenses", "Pluperfect (Higher)"], ["Grammar", "Verbs & tenses", "Present subjunctive in set phrases (Higher)"], ["Grammar", "Verbs & tenses", "Imperative"], ["Grammar", "Verbs & tenses", "Venir de & depuis"], ["Grammar", "Other grammar", "Articles & partitives (du, de la, des)"], ["Grammar", "Other grammar", "Adjective agreement & position"], ["Grammar", "Other grammar", "Comparatives & superlatives"], ["Grammar", "Other grammar", "Object pronouns, y & en"], ["Grammar", "Other grammar", "Negatives (ne…pas, jamais, rien, plus, personne)"], ["Grammar", "Other grammar", "Opinion phrases & justifications"], ["Grammar", "Other grammar", "Time phrases & connectives"], ["Exam skills", "Paper 1: Listening", "Listening comprehension (questions in English & French)"], ["Exam skills", "Paper 1: Listening", "Dictation"], ["Exam skills", "Paper 2: Speaking", "Role-play"], ["Exam skills", "Paper 2: Speaking", "Reading aloud + follow-up questions"], ["Exam skills", "Paper 2: Speaking", "Photo card & unprepared conversation"], ["Exam skills", "Paper 3: Reading", "Reading comprehension"], ["Exam skills", "Paper 3: Reading", "Translation French → English"], ["Exam skills", "Paper 4: Writing", "Short & structured writing tasks"], ["Exam skills", "Paper 4: Writing", "Extended writing (range of tenses & opinions)"], ["Exam skills", "Paper 4: Writing", "Translation English → French"], ["Vocabulary", "AQA vocabulary list", "High-frequency words & verbs"], ["Vocabulary", "AQA vocabulary list", "Question words"], ["Vocabulary", "AQA vocabulary list", "Numbers, dates & times"]]}}};
+const COLOURS = {Maths:"#3b7dd8",English:"#e0664f",Biology:"#3ea66b",Chemistry:"#8e5cc4",Physics:"#2aa4b8",
+  French:"#e0a526",Geography:"#b4674a",Music:"#cc4f8d","Sports Studies":"#5d9e3a"};
+const DAYNAMES = {Mon:"Monday",Tue:"Tuesday",Wed:"Wednesday",Thu:"Thursday",Fri:"Friday",Sat:"Saturday",Sun:"Sunday"};
+const JS_DAY = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const KEY = "gcse-revision-v1";
+const SUBJECTS = Object.keys(DATA.subjects);
+const TABS = ["Today","Week",...SUBJECTS,"Backup"];
+
+let state = {ratings:{}, done:{}};
+let memoryOnly = false;
+function load(){
+  try{ const raw = localStorage.getItem(KEY); if(raw){ const s = JSON.parse(raw); state = {ratings:s.ratings||{}, done:s.done||{}}; } }
+  catch(e){ memoryOnly = true; }
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }
+  catch(e){ if(!memoryOnly){ memoryOnly = true; toast("This browser can't save – use Export to keep your progress"); } }
+}
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const idOf = (subj, it) => subj + "|" + it.join("|");
+const todayKey = () => { const d = new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
+const hm = m => { const h = Math.floor(m/60), r = m%60; return h ? (h+"h"+(r?" "+String(r).padStart(2,"0")+"m":"")) : r+"m"; };
+function toast(msg){ const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove("show"), 2400); }
+
+function counts(subj){
+  const c = {r:0,a:0,g:0,n:0};
+  for(const it of DATA.subjects[subj].items){ const v = state.ratings[idOf(subj,it)]; c[v||"n"]++; }
+  return c;
+}
+function barHTML(c){
+  const tot = c.r+c.a+c.g+c.n || 1;
+  const seg = (n,col) => n ? `<span style="width:${n/tot*100}%;background:var(${col})"></span>` : "";
+  return `<div class="bar">${seg(c.g,"--green")}${seg(c.a,"--amber")}${seg(c.r,"--red")}</div>
+  <div class="legend"><span><b>${c.g}</b> green</span><span><b>${c.a}</b> amber</span><span><b>${c.r}</b> red</span><span><b>${c.n}</b> not rated</span></div>`;
+}
+function focusItems(subj, n){
+  const items = DATA.subjects[subj]?.items || [];
+  const pick = v => items.filter(it => (state.ratings[idOf(subj,it)]||"n") === v);
+  return [...pick("r"), ...pick("a"), ...pick("n")].slice(0,n);
+}
+
+let current = "Today";
+let filter = "all";
+function setTab(t){
+  current = TABS.includes(t) ? t : "Today";
+  filter = "all";
+  try{ history.replaceState(null,"","#"+encodeURIComponent(current)); }catch(e){}
+  render();
+  window.scrollTo(0,0);
+  const b = document.querySelector(`nav button[data-t="${CSS.escape(current)}"]`);
+  if(b) b.scrollIntoView({inline:"center",block:"nearest"});
+}
+function renderTabs(){
+  document.getElementById("tabs").innerHTML = TABS.map(t =>
+    `<button data-t="${esc(t)}" class="${t===current?"on":""}">${esc(t)}</button>`).join("");
+}
+
+function viewToday(){
+  const dn = JS_DAY[new Date().getDay()];
+  const day = DATA.days.find(d => d[0]===dn);
+  const sessions = day ? day[1] : [];
+  const tk = todayKey();
+  let h = `<h2>${DAYNAMES[dn]}</h2>`;
+  if(!sessions.length){
+    return h + `<div class="card free"><div class="big">🎉</div><h3>No revision today</h3><p class="muted">Enjoy the day off.</p></div>`;
+  }
+  const total = sessions.reduce((a,s)=>a+s[1],0);
+  const doneN = sessions.filter((s,i)=>state.done[tk+"|"+i]).length;
+  h += `<p class="muted" style="margin-top:-6px">${sessions.length} sessions · ${hm(total)} · ${doneN} done</p>`;
+  sessions.forEach(([subj,mins],i)=>{
+    const done = !!state.done[tk+"|"+i];
+    const f = done ? [] : focusItems(subj,3);
+    const has = !!DATA.subjects[subj];
+    h += `<div class="card session ${done?"done":""}">
+      <button class="check ${done?"on":""}" data-done="${i}" aria-label="Mark ${esc(subj)} done">${done?"✓":""}</button>
+      <div class="body">
+        <div class="top"><h3 class="subj"><span class="dot" style="background:${COLOURS[subj]||"#888"}"></span>${esc(subj)}</h3><span class="mins">${mins} min</span></div>
+        ${f.length ? `<ul class="focus">${f.map(it=>`<li>${esc(it[2])}</li>`).join("")}</ul>` : ""}
+        ${has && !done ? `<button class="link" data-go="${esc(subj)}">Open ${esc(subj)} tracker</button>` : ""}
+      </div></div>`;
+  });
+  return h;
+}
+
+function viewWeek(){
+  const dn = JS_DAY[new Date().getDay()];
+  let h = `<h2>Weekly timetable</h2>`;
+  let wk = 0;
+  for(const [d,ss] of DATA.days){
+    const tot = ss.reduce((a,s)=>a+s[1],0); wk += tot;
+    h += `<div class="card"><div class="day ${d===dn?"today":""}"><h3>${DAYNAMES[d]}</h3><span class="muted">${tot?hm(tot):"Free"}</span></div>
+      ${ss.length ? `<div class="chips">${ss.map(([s,m])=>`<span class="chip"><span class="dot" style="background:${COLOURS[s]||"#888"}"></span>${esc(s)} · ${m}m</span>`).join("")}</div>` : `<span class="muted">Free day</span>`}
+    </div>`;
+  }
+  const per = {};
+  DATA.days.forEach(([,ss])=>ss.forEach(([s,m])=>per[s]=(per[s]||0)+m));
+  h += `<div class="card"><div class="day"><h3>Weekly totals</h3><span class="muted">${hm(wk)}</span></div><div class="chips">${
+    Object.entries(per).map(([s,m])=>`<span class="chip"><span class="dot" style="background:${COLOURS[s]||"#888"}"></span>${esc(s)} · ${hm(m)}</span>`).join("")}</div></div>`;
+  return h;
+}
+
+function viewSubject(subj){
+  const S = DATA.subjects[subj];
+  const c = counts(subj);
+  let h = `<h2><span class="dot" style="background:${COLOURS[subj]}"></span>${esc(subj)}</h2>
+    <div class="card"><div class="muted">${esc(S.title)}</div>${barHTML(c)}</div>`;
+  const fl = [["all","All"],["r","Red"],["a","Amber"],["g","Green"],["n","Not rated"]];
+  h += `<div class="filters">${fl.map(([k,l])=>`<button data-f="${k}" class="${filter===k?"on":""}">${l}</button>`).join("")}</div>`;
+  const groups = [];
+  for(const it of S.items){
+    let g = groups.find(x=>x.name===it[0]);
+    if(!g){ g = {name:it[0], items:[]}; groups.push(g); }
+    g.items.push(it);
+  }
+  let shown = 0;
+  for(const g of groups){
+    const vis = g.items.filter(it => filter==="all" || (state.ratings[idOf(subj,it)]||"n")===filter);
+    if(!vis.length) continue;
+    shown += vis.length;
+    const gc = g.items.filter(it=>state.ratings[idOf(subj,it)]==="g").length;
+    const open = filter!=="all" || groups.length<=2 ? "open" : "";
+    let inner = "", lastSub = null;
+    for(const it of vis){
+      if(it[1] && it[1]!==lastSub){ inner += `<div class="sub">${esc(it[1])}</div>`; lastSub = it[1]; }
+      const id = idOf(subj,it), v = state.ratings[id]||"";
+      inner += `<div class="item ${v}" data-id="${esc(id)}"><div class="t">${esc(it[2])}</div>
+        <div class="rag"><button class="r ${v==="r"?"on":""}" data-v="r" aria-label="Red">R</button><button class="a ${v==="a"?"on":""}" data-v="a" aria-label="Amber">A</button><button class="g ${v==="g"?"on":""}" data-v="g" aria-label="Green">G</button></div></div>`;
+    }
+    h += `<details class="group" data-g="${esc(g.name)}" ${open}><summary><span>${esc(g.name)}</span><span class="count">${gc}/${g.items.length} green</span></summary>${inner}</details>`;
+  }
+  if(!shown) h += `<div class="card empty">Nothing here yet.</div>`;
+  return h;
+}
+
+function viewBackup(){
+  let h = `<h2>Backup</h2>
+  <div class="card"><p style="margin-top:0">Your ratings and ticks are saved in this browser on this device. Export a backup now and then, so clearing browser data doesn't wipe your progress. You can also use Export and Import to move progress to another device.</p>
+  <button class="btn primary" id="exportBtn">Export progress</button>
+  <button class="btn" id="importBtn">Import progress</button></div>`;
+  let all = {r:0,a:0,g:0,n:0};
+  h += `<div class="card"><h3>Overall progress</h3>`;
+  for(const s of SUBJECTS){
+    const c = counts(s); for(const k in c) all[k]+=c[k];
+    h += `<div style="margin-top:12px"><div class="day" style="margin:0"><span><span class="dot" style="background:${COLOURS[s]}"></span>${esc(s)}</span><span class="muted">${c.g}/${c.r+c.a+c.g+c.n} green</span></div>${barHTML(c).split('<div class="legend">')[0]}</div>`;
+  }
+  h += `</div><div class="card"><button class="btn danger" id="resetBtn" style="margin-top:0">Reset all progress</button></div>`;
+  return h;
+}
+
+function render(){
+  renderTabs();
+  const v = document.getElementById("view");
+  const openGroups = new Set([...v.querySelectorAll("details.group[open]")].map(d=>d.dataset.g));
+  if(current==="Today") v.innerHTML = viewToday();
+  else if(current==="Week") v.innerHTML = viewWeek();
+  else if(current==="Backup") v.innerHTML = viewBackup();
+  else {
+    v.innerHTML = viewSubject(current);
+    if(render._keep) v.querySelectorAll("details.group").forEach(d=>{ if(openGroups.has(d.dataset.g)) d.open = true; });
+  }
+  render._keep = false;
+}
+
+document.getElementById("tabs").addEventListener("click", e => { const b = e.target.closest("button[data-t]"); if(b) setTab(b.dataset.t); });
+document.getElementById("view").addEventListener("click", e => {
+  const go = e.target.closest("[data-go]"); if(go){ setTab(go.dataset.go); return; }
+  const dn = e.target.closest("[data-done]");
+  if(dn){ const k = todayKey()+"|"+dn.dataset.done; if(state.done[k]) delete state.done[k]; else state.done[k]=true; save(); render(); return; }
+  const f = e.target.closest("[data-f]"); if(f){ filter = f.dataset.f; render(); return; }
+  const rb = e.target.closest(".rag button");
+  if(rb){
+    const id = rb.closest(".item").dataset.id, v = rb.dataset.v;
+    if(state.ratings[id]===v) delete state.ratings[id]; else state.ratings[id]=v;
+    save(); const y = window.scrollY; render._keep = true; render(); window.scrollTo(0,y); return;
+  }
+  if(e.target.id==="exportBtn"){
+    const blob = new Blob([JSON.stringify({app:"gcse-revision",version:1,exported:new Date().toISOString(),...state},null,1)],{type:"application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "gcse-revision-backup-"+todayKey()+".json";
+    document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href); a.remove();},500);
+    toast("Backup downloaded");
+  }
+  if(e.target.id==="importBtn") document.getElementById("importFile").click();
+  if(e.target.id==="resetBtn" && confirm("Clear all ratings and ticks? This can't be undone unless you have a backup.")){
+    state = {ratings:{},done:{}}; save(); render(); toast("Progress reset");
+  }
+});
+document.getElementById("importFile").addEventListener("change", e => {
+  const file = e.target.files[0]; if(!file) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try{
+      const s = JSON.parse(r.result);
+      if(typeof s.ratings!=="object") throw 0;
+      state = {ratings:s.ratings||{}, done:s.done||{}}; save(); render(); toast("Progress imported");
+    }catch(err){ toast("That file isn't a valid backup"); }
+    e.target.value = "";
+  };
+  r.readAsText(file);
+});
+
+load();
+setTab(decodeURIComponent(location.hash.slice(1)) || "Today");
+</script>
+</body>
+</html>
